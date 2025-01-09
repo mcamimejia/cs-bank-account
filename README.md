@@ -14,6 +14,8 @@ Refactorización de la clase BankAccount para el proyecto en Spring Boot con el 
 
 ## Segunda parte:
 Crear diagrama ER, integración de base de datos con H2 e implementacióon de las entidades USER, BANK_ACCOUNT y TRANSACTION con JPA.
+![h2-console](h2-console.PNG)
+![diagrama](ER-model.png)
 
 # Pruebas en postman
 
