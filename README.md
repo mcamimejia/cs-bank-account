@@ -9,8 +9,13 @@ Dirigirse a la carpeta raíz del projecto: ./csBankAccount y ejecutar el siguien
 Proyecto en Gradle con Jar y Java 17
 Dependencias: Spring Web, Spring Boot DevTools, Spring REST Docs, Spring Data JPA, h2database.
 
-Primera parte:
+## Primera parte:
 Refactorización de la clase BankAccount para el proyecto en Spring Boot con el controlador web para las peticiones http.
+
+## Segunda parte:
+Crear diagrama ER, integración de base de datos con H2 e implementacióon de las entidades USER, BANK_ACCOUNT y TRANSACTION con JPA.
+
+# Pruebas en postman
 
 ## Crear usuario:
 ![crear-usuario](api_requets/1.PNG)
