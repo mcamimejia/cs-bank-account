@@ -17,6 +17,10 @@ Crear diagrama ER, integración de base de datos con H2 e implementacióon de la
 ![h2-console](h2-console.PNG)
 ![diagrama](ER-model.png)
 
+## Tercera parte:
+Agregar tests unitarios para los métodos de la clase BankAccount. Uso de Spring Boot Test con JUnit.
+![tests](bankAccountTests.PNG)
+
 # Pruebas en postman
 
 ## Crear usuario:
