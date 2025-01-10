@@ -2,6 +2,7 @@ package csBankAccount.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import csBankAccount.config.JwtTokenProvider;
 import csBankAccount.entities.BankAccount;
 import csBankAccount.repository.BankAccountRepository;
 
@@ -29,7 +30,11 @@ class BankAccountControllerTest {
     @Autowired
     private BankAccountRepository bankAccountRepository;
     
+    @Autowired
+    private JwtTokenProvider jwtTokenProvider;
+    
     private Long accountId;
+    private String jwtToken;
     
     @BeforeEach
     void setup() {
@@ -38,11 +43,14 @@ class BankAccountControllerTest {
         BankAccount account = new BankAccount("sssaaa", "Test Account");
         BankAccount savedAccount = bankAccountRepository.save(account);
         accountId = savedAccount.getId();
+        
+        jwtToken = jwtTokenProvider.generateToken("testuser");
     }
 
     @Test
     void shouldReturnAccountDetailsWhenAccountExists() throws Exception {
-    	mockMvc.perform(get("/api/accounts/" + accountId))
+        mockMvc.perform(get("/api/accounts/" + accountId)
+                        .header("Authorization", "Bearer " + jwtToken))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.id").value(accountId));
@@ -50,7 +58,8 @@ class BankAccountControllerTest {
 
     @Test
     void shouldReturnNotFoundWhenAccountDoesNotExist() throws Exception {
-        mockMvc.perform(get("/api/accounts/999"))
+        mockMvc.perform(get("/api/accounts/999")
+                        .header("Authorization", "Bearer " + jwtToken))
                 .andExpect(status().isNotFound());
     }
 
@@ -60,7 +69,8 @@ class BankAccountControllerTest {
 
         mockMvc.perform(post("/api/accounts")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(newAccount)))
+                        .content(objectMapper.writeValueAsString(newAccount))
+                        .header("Authorization", "Bearer " + jwtToken))
                 .andExpect(status().isOk());
     }
 }

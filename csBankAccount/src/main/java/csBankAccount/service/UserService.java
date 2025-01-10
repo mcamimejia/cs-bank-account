@@ -1,6 +1,7 @@
 package csBankAccount.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import csBankAccount.entities.User;
@@ -29,5 +30,14 @@ public class UserService {
 
     public User getUserByEmail(String email) {
         return userRepository.findByEmail(email);
+    }
+    
+    public User getUserByUsername(String username) {
+        return userRepository.findByUsername(username)
+        		.orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + username));
+    }
+    
+    public boolean existsByUsername(String username) {
+        return userRepository.findByUsername(username).isPresent();
     }
 }
