@@ -23,6 +23,9 @@ gradle test
 
 ![tests](bankAccountTests.PNG)
 
+## Cuarta parte:
+Se agrega Spring Boot Security configurado con JWT para la restricción de acceso a todas las rutas menos las de /auth/** y la de la consola h2.
+
 # Pruebas en postman
 
 ## Crear usuario:
