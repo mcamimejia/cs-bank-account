@@ -3,6 +3,10 @@ package csBankAccount.controller;
 import csBankAccount.entities.User;
 import csBankAccount.config.JwtTokenProvider;
 import csBankAccount.service.UserService;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -32,14 +36,21 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody User user) {
+    public ResponseEntity<Map<String, Object>> login(@RequestBody User user) {
         User existingUser = userService.getUserByUsername(user.getUsername());
 
+        Map<String, Object> response = new HashMap<>();
+        
         if (existingUser == null || !passwordEncoder.matches(user.getPassword(), existingUser.getPassword())) {
-            return ResponseEntity.status(401).body("Invalid username or password");
+        	response.put("message", "Invalid username or password");
+            return ResponseEntity.status(401).body(response);
         }
 
         String token = jwtTokenProvider.generateToken(existingUser.getUsername());
-        return ResponseEntity.ok("Bearer " + token);
+
+        response.put("id", existingUser.getId());
+        response.put("token", "Bearer " + token);
+
+        return ResponseEntity.ok(response);
     }
 }
